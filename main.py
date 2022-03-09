@@ -15,6 +15,32 @@ class BinaryNumber:
     
 
 ## Implement multiplication functions here. Note that you will have to
+def _quadratic_multiply(x, y):
+  xvec, yvec = pad(x.binary_vec, y.binary_vec)
+  #if(len(xvec) <= 1 and len(yvec) <= 1):
+  if(x.decimal_val <= 1 and y.decimal_val <= 1):
+    return BinaryNumber(x.decimal_val*y.decimal_val)
+  else:
+    x_left, x_right = split_number(xvec)
+    y_left, y_right = split_number(yvec)
+
+    n = len(xvec)
+    #left part
+    LP = _quadratic_multiply(x_left, y_left)
+    sumLeft = bit_shift(LP, n)
+
+    #middle sum
+    MsumL = _quadratic_multiply(x_left, y_right)
+    MsumR = _quadratic_multiply(x_right, y_left)
+    inside = MsumL.decimal_val + MsumR.decimal_val
+    sumMid = bit_shift(BinaryNumber(inside), n//2)
+
+    #right sum
+    sumRight = _quadratic_multiply(x_right, y_right)
+
+    total = sumLeft.decimal_val + sumMid.decimal_val + sumRight.decimal_val
+    return BinaryNumber(total)
+    
 ## ensure that x, y are appropriately sized binary vectors for a
 ## divide and conquer approach.
 def binary2int(binary_vec): 
@@ -47,7 +73,13 @@ def pad(x,y):
 
 def subquadratic_multiply(x, y):
     ### TODO
-    pass
+    left_side = subquadratic_multiply(x_left, y_left)
+    right_side = subquadratic_multiply(x_right, y_right)
+
+    xMid = BinaryNumber(x_left.decimal_val + y_left.decimal_val)
+    yMid = BinaryNumber(x_right.decimal_val + y_right.decimal_val)
+
+    middle = BinaryNumber(subquadratic_multiply())
     ###
 
 ## Feel free to add your own tests here.
