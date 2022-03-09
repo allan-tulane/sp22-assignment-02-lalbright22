@@ -59,17 +59,16 @@ def subquadratic_multiply(x, y):
     
     lefts = subquadratic_multiply(x_left, y_left)
     leftFin = bit_shift(lefts, n)
-    
-    rightFin = subquadratic_multiply(x_right, y_right)
-    #rightFin = bit_shift(rights, n)
 
     xSums = BinaryNumber(x_left.decimal_val + x_right.decimal_val)
     ySums = BinaryNumber(y_left.decimal_val + y_right.decimal_val)
     #xySums = xSums.decimal_val + ySums.decimal_val
     #xyFin = bit_shift(BinaryNumber(xySums), n//2)
 
-    middle = BinaryNumber(subquadratic_multiply(xSums, ySums).decimal_val-lefts.decimal_val-rightFin.decimal_val)
+    rightFin = subquadratic_multiply(x_right, y_right)
     
+    middle = bit_shift(BinaryNumber(subquadratic_multiply(xSums, ySums).decimal_val-lefts.decimal_val-rightFin.decimal_val), n//2)
+
     final = middle.decimal_val + leftFin.decimal_val + rightFin.decimal_val
 
   return BinaryNumber(final)
@@ -77,7 +76,7 @@ def subquadratic_multiply(x, y):
 
 ## Feel free to add your own tests here.
 def test_multiply():
-    assert subquadratic_multiply(BinaryNumber(2), BinaryNumber(2)) == 2*2
+    assert subquadratic_multiply(BinaryNumber(2), BinaryNumber(2)).decimal_val == 2*2
 
 def time_multiply(x, y, f):
     start = time.time()
