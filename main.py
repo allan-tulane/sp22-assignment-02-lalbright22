@@ -58,18 +58,19 @@ def subquadratic_multiply(x, y):
     n = len(xvec)
     
     lefts = subquadratic_multiply(x_left, y_left)
-    leftFin = bit_shift(lefts, n//2)
+    leftFin = bit_shift(lefts, n)
     
     rightFin = subquadratic_multiply(x_right, y_right)
     #rightFin = bit_shift(rights, n)
 
     xSums = BinaryNumber(x_left.decimal_val + x_right.decimal_val)
     ySums = BinaryNumber(y_left.decimal_val + y_right.decimal_val)
-    xySums = xSums.decimal_val + ySums.decimal_val
-    xyFin = bit_shift(BinaryNumber(xySums), n//2)
+    #xySums = xSums.decimal_val + ySums.decimal_val
+    #xyFin = bit_shift(BinaryNumber(xySums), n//2)
 
-    final = xyFin.decimal_val - leftFin.decimal_val - rightFin.decimal_val
-    #final = BinaryNumber(subquadratic_multiply(xSums, ySums).decimal_val-lefts.decimal_val-rights.decimal_val)
+    middle = BinaryNumber(subquadratic_multiply(xSums, ySums).decimal_val-lefts.decimal_val-rightFin.decimal_val)
+    
+    final = middle.decimal_val + leftFin.decimal_val + rightFin.decimal_val
 
   return BinaryNumber(final)
     ###
